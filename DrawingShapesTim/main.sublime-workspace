@@ -19,7 +19,7 @@
 			"file": "main.lua",
 			"settings":
 			{
-				"buffer_size": 962,
+				"buffer_size": 1675,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -147,15 +147,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 962,
+						"buffer_size": 1675,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								962,
-								962
+								1675,
+								1675
 							]
 						],
 						"settings":
@@ -163,7 +163,7 @@
 							"syntax": "Packages/Lua/Lua.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 243.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
