@@ -1,14 +1,15 @@
 -----------------------------------------------------------------------------------------
---
--- 
---
+-- Title: Animating Images
+-- Course: ICS20
+-- Name: Tim Riscalas
+-- This program displays three moving images.
 -----------------------------------------------------------------------------------------
 
 -- -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
 
 -- global variables
-scrollSpeedMars = 3.5
+scrollSpeedMoon = 3.5
 scrollSpeedAstronaut = 4.0
 scrollSpeedRocketShip = 3.8
 
@@ -16,31 +17,31 @@ scrollSpeedRocketShip = 3.8
 local backgroundImage = display.newImageRect("Images/background.jfif", 2048, 1536)
 
 -- character image with width and height
-local mars = display.newImageRect("Images/mars.png", 200, 200)
+local moon = display.newImageRect("Images/moon.png", 200, 200)
 
 -- set the image to be transparent
-mars.alpha = 0
+moon.alpha = 0
 
--- set the initial x and y position of mars
-mars.x = 0
-mars.y = display.contentHeight/3
+-- set the initial x and y position of moon
+moon.x = 0
+moon.y = display.contentHeight/3
 
--- Function: MoveMars
+-- Function: MoveMoon
 -- Input: this funstion accepts an event listener
 -- Output: none
 -- Description: This function adds the scroll speed to the x-value of the ship
-local function MoveMars(event)
+local function MoveMoon(event)
 	-- add the scroll speed to the x-value of the ship
-	mars.x = mars.x + scrollSpeedMars
+	moon.x = moon.x + scrollSpeedMoon
 	-- change the transparency of the ship every time it moves so that it fades in
-	mars.alpha = mars.alpha + 0.01
+	moon.alpha = moon.alpha + 0.01
 end
 
--- MoveMars will be called over and over again
-Runtime:addEventListener("enterFrame", MoveMars)
+-- MoveMoon will be called over and over again
+Runtime:addEventListener("enterFrame", MoveMoon)
 
 -- charcter image with width and height
-local astronaut = display.newImageRect("Images/astronaut2.png", 300, 300)
+local astronaut = display.newImageRect("Images/astronaut.png", 300, 300)
 
 -- set the image to be in full colour
 astronaut.alpha = 1
@@ -64,3 +65,29 @@ end
 
 -- MoveAstronaut will be called over and over again
 Runtime:addEventListener("enterFrame", MoveAstronaut)
+
+-- charcter image with width and height
+local rocketShip = display.newImageRect("Images/rocketship.png", 300, 300)
+
+-- set the image to be in full colour
+rocketShip.alpha = 1
+
+-- set the intial x and y position of rocketShip
+rocketShip.x = 1024
+rocketShip.y = display.contentHeight * 1/3
+
+-- Function: MoveRocketShip
+-- Input: this function accepts an event listener
+-- Output: none
+-- Description: This function adds the scroll speed to the x-value of the rocketShip
+local function MoveRocketShip(event)
+	-- add the scroll speed to the x-value of the ship
+	rocketShip.x = rocketShip.x - scrollSpeedRocketShip
+	-- change the transparency of the ship every time it moves so that it fades out
+	rocketShip.alpha = rocketShip.alpha - 0.0001  
+	-- make the rocketShip grow in size
+	rocketShip:scale(1.003, 1.003)
+end
+
+-- MoveRocketShip will be called over and over again
+Runtime:addEventListener("enterFrame", MoveRocketShip)
