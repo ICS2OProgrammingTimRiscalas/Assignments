@@ -48,7 +48,7 @@ astronaut.alpha = 1
 
 -- set the intial x and y position of astronaut
 astronaut.x = 1024
-astronaut.y = display.contentHeight * 2/3
+astronaut.y = display.contentHeight * 1/1.3
 
 -- Function: MoveAstronaut
 -- Input: this function accepts an event listener
@@ -60,7 +60,7 @@ local function MoveAstronaut(event)
 	-- change the transparency of the ship every time it moves so that it fades out
 	astronaut.alpha = astronaut.alpha - 0.0001  
 	-- make the astronaut grow in size
-	astronaut:scale(1.003, 1.003)
+	astronaut:scale(1.002, 1.002)
 end
 
 -- MoveAstronaut will be called over and over again
@@ -70,11 +70,11 @@ Runtime:addEventListener("enterFrame", MoveAstronaut)
 local rocketShip = display.newImageRect("Images/rocketship.png", 300, 300)
 
 -- set the image to be in full colour
-rocketShip.alpha = 1
+rocketShip.alpha = 0
 
 -- set the intial x and y position of rocketShip
 rocketShip.x = 1024
-rocketShip.y = display.contentHeight * 1/3
+rocketShip.y = display.contentHeight/1
 
 -- Function: MoveRocketShip
 -- Input: this function accepts an event listener
@@ -83,10 +83,11 @@ rocketShip.y = display.contentHeight * 1/3
 local function MoveRocketShip(event)
 	-- add the scroll speed to the x-value of the ship
 	rocketShip.x = rocketShip.x - scrollSpeedRocketShip
-	-- change the transparency of the ship every time it moves so that it fades out
-	rocketShip.alpha = rocketShip.alpha - 0.0001  
+	-- change the transparency of the ship every time it moves so that it fades in
+	rocketShip.alpha = rocketShip.alpha + 0.01 
 	-- make the rocketShip grow in size
 	rocketShip:scale(1.003, 1.003)
+	rocketShip:scale(1,1)
 end
 
 -- MoveRocketShip will be called over and over again
