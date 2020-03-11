@@ -8,9 +8,10 @@
 -- -- hide the status bar
 display.setStatusBar(display.HiddenStatusBar)
 
+-- make a background sound
 local backgroundSound = audio.loadSound("Sounds/creepy space sound.mp3")
 local backgroundSoundChannel = audio.play(backgroundSound,{loops = -1})
-
+local rocketShip = display.newImageRect("Images/rocketship.png", 300, 300)
 -- global variables
 scrollSpeedMoon = 3.5
 scrollSpeedAstronaut = 3.75
@@ -30,8 +31,16 @@ moon.alpha = 0
 moon.x = 0
 moon.y = display.contentHeight/3
 
+-- make the moon rotate
+local function RotateMoon(event)
+	moon:rotate(10)
+end
+
+-- MoonRotation will be called over and over again
+Runtime:addEventListener("enterFrame", RotateMoon)
+
 -- Function: MoveMoon
--- Input: this funstion accepts an event listener
+-- Input: this function accepts an event listener
 -- Output: none
 -- Description: This function adds the scroll speed to the x-value of the ship
 local function MoveMoon(event)
