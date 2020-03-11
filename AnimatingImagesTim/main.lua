@@ -128,3 +128,8 @@ end
 
 -- MoveRocketShip will be called over and over again
 Runtime:addEventListener("enterFrame", MoveRocketShip)
+
+-- add text to the program
+local title
+title = display.newText("Creepy Galaxies", display.contentWidth/2, display.contentHeight/2, Helvetica, 100)
+title:setTextColor(219/255, 4/255, 4/255)
