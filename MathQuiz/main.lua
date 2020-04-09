@@ -36,7 +36,7 @@ local youWin
 local gameOver
 local randomOperator
 local randomNumber3
-local TotalSeconds = 11
+local TOTALSECONDS = 11
 local secondsLeft = 11
 local clockText
 local countdownTimer
@@ -46,6 +46,7 @@ local heart2
 local heart3
 local youWinImage
 local youLoseImage
+number = 0
 
 -------------------------------------------------------------------------------------------
 -- SOUNDS
@@ -154,7 +155,7 @@ local function UpdateTime()
 
 	if (secondsLeft == 0) then
 		-- reset the number of seconds left 
-		secondsLeft = TotalSeconds
+		secondsLeft = TOTALSECONDS
 		lives = lives - 1
 		-- tell the user the correct answer 
 		incorrectObject.isVisible = true
@@ -182,6 +183,7 @@ local function UpdateTime()
 			numericTextFields.isVisible = false
 			youLoseImage.isVisible = true
 			audio.stop(wrongSoundChannel)
+			timer.cancel(countdownTimer)
 		end
 	end
 end
@@ -218,11 +220,12 @@ local function NumericFieldListener( event)
 		event.target.text = ""
 
 	elseif (event.phase == "submitted") then
-		secondsLeft = totalSeconds
+		secondsLeft = TOTALSECONDS
 		-- when the answer is submitted (enter key is pressed) set user input to user's answer
 		userAnswer = tonumber(event.target.text)
 		-- if the user's answer and the correct answer are the same:
 		if (userAnswer == correctAnswer) then
+			secondsLeft = TOTALSECONDS
 			correctObject.isVisible = true
 			correctSoundChannel = audio.play(correctSound)
 			incorrectObject.isVisible = false
@@ -242,6 +245,17 @@ local function NumericFieldListener( event)
 				youWinImage.isVisible = true
 				audio.stop(correctSoundChannel)
 				youWinSoundChannel = audio.play(youWinSound)
+				timer.cancel(countdownTimer)
+
+				-- make the youWinImage rotate
+				local function RotateYouWin(event)
+					youWinImage:rotate(20)
+					number = number + 20
+					if (number < 360) then
+						timer.performWithDelay(100,RotateYouWin)
+					end
+				end
+				RotateYouWin()
 			end
 
 		-- inside the else means they got it wrong
@@ -262,7 +276,7 @@ local function NumericFieldListener( event)
 		elseif (lives == 1) then
 			heart2.isVisible = false
 		elseif (lives == 0) then
-			heart4.isVisible = false
+			heart3.isVisible = false
 			audio.pause(backgroundSoundChannel)
 			audio.stop(wrongSoundChannel)
 			gameOverSoundChannel = audio.play(gameOverSound)
@@ -272,6 +286,7 @@ local function NumericFieldListener( event)
 			incorrectObject.isVisible = false
 			numericTextFields.isVisible = false
 			youLoseImage.isVisible = true
+			timer.cancel(countdownTimer)
 		end
 	end
 		event.target.text = ""
@@ -308,7 +323,7 @@ correctObject:setTextColor(66/255, 226/255, 26/255)
 correctObject.isVisible = false
 
 -- create numeric field
-numericTextFields = native.newTextField( display.contentWidth/2, display.contentHeight * 2/3, 150, 100)
+numericTextFields = native.newTextField( display.contentWidth/1.9, display.contentHeight * 2/3, 150, 100)
 numericTextFields.inputType = "number"
 -- add the event listener for the numeric field
 numericTextFields:addEventListener("userInput", NumericFieldListener)
@@ -325,8 +340,8 @@ clockText = display.newText("",  display.contentWidth/2, display.contentHeight/2
 clockText:setTextColor(40/255, 239/255, 232/255)
 
 youWinImage = display.newImageRect("Images/you win.png", display.contentWidth, display.contentHeight)
-youWinImage.anchorX = 0
-youWinImage.anchorY = 0
+youWinImage.x = 513
+youWinImage.y = 385
 youWinImage.isVisible = false
 
 youLoseImage = display.newImageRect("Images/you lose.jpg", display.contentWidth, display.contentHeight)
