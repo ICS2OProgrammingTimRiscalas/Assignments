@@ -1,16 +1,9 @@
 -----------------------------------------------------------------------------------------
--- Title: MathFun
--- Name: Your Name
+-- Title: MathQuiz
+-- Name: Tim R
 -- Course: ICS2O/3C
--- This program shows a math game with random addition, 
--- subtraction, multiplication, and division questions.
------------------------------------------------------------------------------------------
-
--- -----------------------------------------------------------------------------------------
--- Title: NumericTextFields
--- Name:  Tim 
--- Course: ICS2O
--- This program displays a math question and asks the user to answer in a numeric textfield.
+-- This program shows a math game with random addition, subtraction, multiplication,
+-- division, exponential, and factorial questions.
 -----------------------------------------------------------------------------------------
 
 -- hide the status bar
@@ -20,7 +13,7 @@ display.setStatusBar(display.HiddenStatusBar)
 display.setDefault("background", 115/255, 56/255, 253/255)
 
 -------------------------------------------------------------------------------------------
--- LOCAL VARIABLES
+-- VARIABLES
 -------------------------------------------------------------------------------------------
 local questionObject
 local correctObject
@@ -46,7 +39,9 @@ local heart2
 local heart3
 local youWinImage
 local youLoseImage
+local counter 
 number = 0
+
 
 -------------------------------------------------------------------------------------------
 -- SOUNDS
@@ -79,7 +74,7 @@ local youWinSoundChannel
 local function AskQuestion()
 	-- generate a random number between 1 and 2
 	-- *** MAKE SURE TO DECLARE THIS VARIABLE ABOVE
-	randomOperator = math.random(1,4) 
+	randomOperator = math.random(1,6) 
 	incorrectObject.isVisible = false
 
 	-- if the randomOperator is 1, then do addition
@@ -91,7 +86,7 @@ local function AskQuestion()
 		-- calculate the correct answer
 		correctAnswer = randomNumber1 + randomNumber2
 	 	-- create question in text object
-		questionObject.text = randomNumber1 .. " + " .. randomNumber2 .. " ="
+		questionObject.text = randomNumber1 .. " + " .. randomNumber2 .. " = "
 
 	-- otherwise, if the random operator is 2, do subtraction
 	elseif (randomOperator == 2) then
@@ -104,7 +99,7 @@ local function AskQuestion()
 			correctAnswer = randomNumber1 - randomNumber2
 
 			-- create question in text object
-			questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " ="
+			questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
 		
 		else 
 			randomNumber3 = randomNumber1
@@ -114,10 +109,10 @@ local function AskQuestion()
 			correctAnswer = randomNumber1 - randomNumber2
 
 			-- create question in text object
-			questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " ="
+			questionObject.text = randomNumber1 .. " - " .. randomNumber2 .. " = "
 		end
 
-	-- otherwise, if the random operator is 2, do subtraction
+	-- otherwise, if the random operator is 3, do subtraction
 	elseif (randomOperator == 3) then	
 		-- generate 2 random numbers between a max. and a min. number
 		randomNumber1 = math.random(1, 10)
@@ -130,7 +125,7 @@ local function AskQuestion()
 		print("***correctAnswer = ".. correctAnswer)
 
 		-- create question in text object
-		questionObject.text = randomNumber3 .. " / " .. randomNumber2 .. " ="
+		questionObject.text = randomNumber3 .. " / " .. randomNumber2 .. " = "
 
 	-- otherwise, if the random operator = 4, do multiplication
 	elseif (randomOperator == 4) then
@@ -141,9 +136,43 @@ local function AskQuestion()
 		-- calculate the correct answer
 		correctAnswer = randomNumber1 * randomNumber2
 		-- create question in text object 
-		questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " ="
+		questionObject.text = randomNumber1 .. " * " .. randomNumber2 .. " = "
+	
+	-- otherwise, if the randomOperator = 5, do exponents
+	elseif (randomOperator == 5) then
+		-- generate 1 random number between a max and a min number 
+		randomNumber1 = math.random(1,10)
+		-- assign values to variables so loop will work
+		counter = 1
+		correctAnswer = 1
+		-- make randomNumber2 a random number between 2 and 3 so that BOTH cube
+		-- and square operation can be done in ONE operation
+		randomNumber2 = math.random(2,3)
+		-- calculate exponents in a loop 
+		while (counter <= randomNumber2) do
+			correctAnswer = correctAnswer * randomNumber1
+			counter = counter + 1
+		end 
+		-- create question in text object 
+		questionObject.text = randomNumber1 .. " ^ " .. randomNumber2 .. " = "
+
+	-- otherwise, if randomOperator = 6, do factorials
+	elseif  (randomOperator == 6) then
+		-- generate 1 random number between a max and a min number 
+		randomNumber1 = math.random(1,5)
+		-- assign values to variables so loop will work
+		counter = 1
+		correctAnswer = 1
+		-- calculate factorials in a loop 
+		while (counter <= randomNumber1) do
+			correctAnswer = correctAnswer * counter 
+			counter = counter + 1
+		end 
+		-- create question in text object 
+		questionObject.text = randomNumber1 .. "! " .. " = "
 	end
 end
+
 
 local function UpdateTime()
 
@@ -318,12 +347,12 @@ heart3.x = display.contentWidth * 5 / 8
 heart3.y = display.contentHeight * 1 / 12
 
 -- create the correct text object and make it invisible
-correctObject = display.newText("Correct!", display.contentWidth/1.4, display.contentHeight * 2/3, nil, 50)
+correctObject = display.newText("Correct!", display.contentWidth/1.3, display.contentHeight * 2/3, nil, 50)
 correctObject:setTextColor(66/255, 226/255, 26/255)
 correctObject.isVisible = false
 
 -- create numeric field
-numericTextFields = native.newTextField( display.contentWidth/1.9, display.contentHeight * 2/3, 150, 100)
+numericTextFields = native.newTextField( display.contentWidth/1.85, display.contentHeight * 2/3, 200, 100)
 numericTextFields.inputType = "number"
 -- add the event listener for the numeric field
 numericTextFields:addEventListener("userInput", NumericFieldListener)
