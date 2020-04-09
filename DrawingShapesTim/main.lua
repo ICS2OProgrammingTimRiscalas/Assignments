@@ -1,7 +1,8 @@
 -----------------------------------------------------------------------------------------
 -- Tim Riscalas
 -- ICS20
--- This program displays four shapes on the iPad, with borders for each shape. The area of the triangle is also calculated with a gradient fill for the hexagon.
+-- This program displays six shapes on the iPad, with borders and gradients for each shape. 
+-- The area of the triangle is also calculated.
 -----------------------------------------------------------------------------------------
 
 -- Your code here
