@@ -148,7 +148,7 @@ local function AskQuestion()
 		-- make randomNumber2 a random number between 2 and 3 so that BOTH cube
 		-- and square operation can be done in ONE operation
 		randomNumber2 = math.random(2,3)
-		-- calculate exponents in a loop 
+		-- calculate exponents in a while loop 
 		while (counter <= randomNumber2) do
 			correctAnswer = correctAnswer * randomNumber1
 			counter = counter + 1
@@ -163,8 +163,8 @@ local function AskQuestion()
 		-- assign values to variables so loop will work
 		counter = 1
 		correctAnswer = 1
-		-- calculate factorials in a loop 
-		while (counter <= randomNumber1) do
+		-- calculate factorials in a for loop 
+		for counter = 1, randomNumber1 do
 			correctAnswer = correctAnswer * counter 
 			counter = counter + 1
 		end 
