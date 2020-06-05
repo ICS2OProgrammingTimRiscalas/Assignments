@@ -26,11 +26,14 @@ scene = composer.newScene( sceneName ) -- This function doesn't accept a string,
 -----------------------------------------------------------------------------------------
 -- GLOBAL VARIABLES
 -----------------------------------------------------------------------------------------
+-- variable to check if the bubbles are blown 
 blownI2 = false
+-- timer to randomly show the bubbles between a certain number of milliseconds
 TimerOnI = false
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
+-- local variables for this scene 
 local bkg_image
 local backButton
 
