@@ -83,8 +83,8 @@ local function Level1ScreenTransition( )
     timer.cancel(resetTimer)
     timer.cancel(blowTimer)
     timer.cancel(ShowBubblesTimer)
-    -- stop the bkg sound 
-    audio.stop(bkgSoundChannel)
+    -- stop all channels 
+    audio.stop()
     -- transition to the level1 screen 
     composer.gotoScene( "level1_screen", {effect = "zoomInOutFadeRotate", time = 1000})
 end    
@@ -288,6 +288,8 @@ function scene:create( event )
             -- Insert the images here
             defaultFile = "Images/Play Button Unpressed.png",
             overFile = "Images/Play Button Pressed.png",
+
+           
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition          
