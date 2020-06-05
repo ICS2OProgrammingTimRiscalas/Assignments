@@ -77,19 +77,6 @@ local function CreditsTransition( )
 end 
 
 -----------------------------------------------------------------------------------------
-
--- Creating Transition Function to Instructions Page
-local function InstructionsTransition( )
-    StopBubbles()
-    timer.cancel(MoveSubmarineTimer)
-    if (ShowBubblesTimer) then
-        timer.cancel(ShowBubblesTimer)   
-    end
-    composer.gotoScene( "instructions_screen", {effect = "flip", time = 500})
-end 
-
------------------------------------------------------------------------------------------
-
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
     timer.cancel(MoveSubmarineTimer)
@@ -101,6 +88,18 @@ local function Level1ScreenTransition( )
     -- transition to the level1 screen 
     composer.gotoScene( "level1_screen", {effect = "zoomInOutFadeRotate", time = 1000})
 end    
+
+-----------------------------------------------------------------------------------------
+
+-- Creating Transition Function to Instructions Page
+local function InstructionsTransition( )
+    StopBubbles()
+    timer.cancel(MoveSubmarineTimer)
+    if (ShowBubblesTimer) then
+        timer.cancel(ShowBubblesTimer)   
+    end
+    composer.gotoScene( "instructions_screen", {effect = "flip", time = 500})
+end 
 
 -----------------------------------------------------------------------------------------
 
