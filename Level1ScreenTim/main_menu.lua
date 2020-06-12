@@ -1,8 +1,8 @@
 -----------------------------------------------------------------------------------------
 --
 -- main_menu.lua
--- Created by: Your Name
--- Date: Month Day, Year
+-- Created by: Tim R 
+-- Date: 2020-06-11
 -- Description: This is the main menu, displaying the credits, instructions & play buttons.
 -----------------------------------------------------------------------------------------
 
@@ -388,7 +388,6 @@ function scene:show( event )
     -- Example: start timers, begin animation, play audio, etc.
     -- make function to call bkg music so there is no overlap between scenes 
     elseif ( phase == "did" ) then
-        print(soundOn)
 
         -- add the mute and unmute functionality to the buttons 
         AddMuteUnMuteListeners()
