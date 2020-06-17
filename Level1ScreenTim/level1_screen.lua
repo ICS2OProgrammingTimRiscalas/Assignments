@@ -29,6 +29,14 @@ local scene = composer.newScene( sceneName )
 -----------------------------------------------------------------------------------------
 Dropped = true
 Hearts = 3
+
+-----------------------------------------------------------------------------------------
+-- LOCAL VARIABLES
+-----------------------------------------------------------------------------------------
+
+local bkgSound = audio.loadSound("Sounds/level1_bkgSound.mp3")
+local bkgSoundChannel
+
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -53,7 +61,6 @@ local musicNote4Timer
 local musicNote5Timer
 local StopImage = 0
 local Cave
-
 -----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
@@ -63,15 +70,11 @@ local Cave
 --    composer.gotoScene("level2_screen")    
 -- end
 
--- function that goes to you win screen 
-local function gotoYouWin( )
-    timer.cancel(DropTimer)
-    composer.gotoScene("YouWin_screen")
-end
-
 -- function that goes to you lose screen 
 local function gotoYouLose( )
     --cancel the timer 
+    -- stop the music 
+    audio.stop()
     timer.cancel(DropTimer)
     composer.gotoScene("YouLose_screen")
 end
@@ -79,10 +82,10 @@ end
 -- function that allows the submarine to move left 
 local function MoveLeft( touch )
     if ( submarine.x >= display.contentWidth/10 ) then
-        submarine.x = submarine.x - 1
+        submarine.x = submarine.x - 2
     elseif (StopImage > 0) then
-        StopImage = StopImage - 1
-        bkg_image.x = bkg_image.x + 1
+        StopImage = StopImage - 2
+        bkg_image.x = bkg_image.x + 2
         musicNote1.x = musicNote1.x + 0.5
         musicNote2.x = musicNote2.x + 0.5
         musicNote3.x = musicNote3.x + 0.5
@@ -94,11 +97,11 @@ end
 -- function that allows the submarine to move right 
 local function MoveRight( touch )
     if (submarine.x <= display.contentWidth*2/3) or (StopImage >= 1024) then
-        submarine.x = submarine.x + 1
+        submarine.x = submarine.x + 2
     elseif (StopImage < 1024) then
         print(StopImage)
-        StopImage = StopImage + 1
-        bkg_image.x = bkg_image.x - 1
+        StopImage = StopImage + 2
+        bkg_image.x = bkg_image.x - 2
         musicNote1.x = musicNote1.x - 1
         musicNote2.x = musicNote2.x - 1
         musicNote3.x = musicNote3.x - 1
@@ -106,17 +109,16 @@ local function MoveRight( touch )
         musicNote5.x = musicNote5.x - 1
     end
     if (StopImage >= 1024) then
-        StopImage = StopImage + 1
+        StopImage = StopImage + 2
         Cave.alpha = Cave.alpha + 0.05
     end
     if (StopImage >= 1040) then
-        submarine.width = submarine.width - 1
-        submarine.height = submarine.height - 1
-        submarine.alpha = submarine.alpha - 0.01
+        submarine.width = submarine.width - 2
+        submarine.height = submarine.height - 2
+        submarine.alpha = submarine.alpha - 0.02
         if (submarine.alpha <= 0) then
             print("DONE")
-            -- gotolevel2()
-            gotoYouWin()
+            gotolevel2()   
         end
     end
 end
@@ -124,14 +126,14 @@ end
 -- function that allows the submarine to move up 
 local function MoveUp( touch )
     if (submarine.y >= display.contentHeight/7.8) then
-        submarine.y = submarine.y - 1
+        submarine.y = submarine.y - 2
     end
 end
 
 -- function that allows the submarine to move down 
 local function MoveDown( touch )
     if (submarine.y <= display.contentHeight/1.16) then
-        submarine.y = submarine.y + 1
+        submarine.y = submarine.y + 2
     end
 end
 
@@ -142,26 +144,26 @@ end
 
 -- function that checks if the submarine had been hit by one of the music notes 
 local function CheckIfHit( )
-    if (((submarine.x - submarine.width/2) < musicNote1.x ) and
-    ((submarine.x + submarine.width/2) > musicNote1.x ) and 
-    ((submarine.y - submarine.height/2) < musicNote1.y ) and 
-    ((submarine.y + submarine.height/2) > musicNote1.y ) ) or 
-    (((submarine.x - submarine.width/2) < musicNote2.x ) and
-    ((submarine.x + submarine.width/2) > musicNote2.x ) and 
-    ((submarine.y - submarine.height/2) < musicNote2.y ) and 
-    ((submarine.y + submarine.height/2) > musicNote2.y ) ) or 
-    (((submarine.x - submarine.width/2) < musicNote3.x ) and
-    ((submarine.x + submarine.width/2) > musicNote3.x ) and 
-    ((submarine.y - submarine.height/2) < musicNote3.y ) and 
-    ((submarine.y + submarine.height/2) > musicNote3.y ) ) or 
-    (((submarine.x - submarine.width/2) < musicNote4.x ) and
-    ((submarine.x + submarine.width/2) > musicNote4.x ) and 
-    ((submarine.y - submarine.height/2) < musicNote4.y ) and 
-    ((submarine.y + submarine.height/2) > musicNote4.y ) ) or
-    (((submarine.x - submarine.width/2) < musicNote5.x ) and
-    ((submarine.x + submarine.width/2) > musicNote5.x ) and 
-    ((submarine.y - submarine.height/2) < musicNote5.y ) and 
-    ((submarine.y + submarine.height/2) > musicNote5.y ) ) then
+    if (((submarine.x - submarine.width) < musicNote1.x ) and
+    ((submarine.x + submarine.width) > musicNote1.x ) and 
+    ((submarine.y - submarine.height) < musicNote1.y ) and 
+    ((submarine.y + submarine.height) > musicNote1.y ) ) or 
+    (((submarine.x - submarine.width) < musicNote2.x ) and
+    ((submarine.x + submarine.width) > musicNote2.x ) and 
+    ((submarine.y - submarine.height) < musicNote2.y ) and 
+    ((submarine.y + submarine.height) > musicNote2.y ) ) or 
+    (((submarine.x - submarine.width) < musicNote3.x ) and
+    ((submarine.x + submarine.width) > musicNote3.x ) and 
+    ((submarine.y - submarine.height) < musicNote3.y ) and 
+    ((submarine.y + submarine.height) > musicNote3.y ) ) or 
+    (((submarine.x - submarine.width) < musicNote4.x ) and
+    ((submarine.x + submarine.width) > musicNote4.x ) and 
+    ((submarine.y - submarine.height) < musicNote4.y ) and 
+    ((submarine.y + submarine.height) > musicNote4.y ) ) or
+    (((submarine.x - submarine.width) < musicNote5.x ) and
+    ((submarine.x + submarine.width) > musicNote5.x ) and 
+    ((submarine.y - submarine.height) < musicNote5.y ) and 
+    ((submarine.y + submarine.height) > musicNote5.y ) ) then
         -- function that cancels the droptimer 
         timer.cancel(DropTimer)
         StopImage = 0
@@ -562,11 +564,30 @@ function scene:show( event )
         UpArrow:addEventListener("touch", MoveUp)
         DownArrow:addEventListener("touch", MoveDown)
         timer.performWithDelay(400, DropMusicNotes)
+        if (Hearts == 3) then 
+            heart1.isVisible = true
+            heart2.isVisible = true
+            heart3.isVisible = true
+        elseif (Hearts == 2) then 
+            heart1.isVisible = true
+            heart2.isVisible = true
+            heart3.isVisible = false
+        elseif (Hearts == 1) then 
+            heart1.isVisible = true
+            heart2.isVisible = false 
+            heart3.isVisible = false 
+        else 
+            heart1.isVisible = false
+            heart2.isVisible = false 
+            heart3.isVisible = false  
+        end
 
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
 
+        -- play the background sound 
+        bkgSoundChannel = audio.play(bkgSound)
     end
 
 end --function scene:show( event )

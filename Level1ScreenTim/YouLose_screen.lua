@@ -37,7 +37,8 @@ local bkg_image
 
 -- function that transitions to main menu 
 local function MainMenuTransition( )
-composer.gotoScene( "main_menu", {effect = "zoomInOutFade", time = 500})
+    composer.removeScene( "main_menu" )
+    composer.gotoScene( "main_menu", {effect = "zoomInOutFade", time = 500})
 end 
 
 -----------------------------------------------------------------------------------------

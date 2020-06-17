@@ -79,6 +79,7 @@ end
 -----------------------------------------------------------------------------------------
 -- Creating Transition to Level1 Screen
 local function Level1ScreenTransition( )
+    composer.removeScene( "level1_screen" )
     timer.cancel(MoveSubmarineTimer)
     timer.cancel(resetTimer)
     timer.cancel(blowTimer)
